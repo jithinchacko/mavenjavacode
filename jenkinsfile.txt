@@ -13,7 +13,7 @@ pipeline {
         stage('build') {
             steps{
                 withSonarQubeEnv('SONAR-7.1') {
-                  sh "mvn ${params.BUILDMETHOD}"  
+                  sh "mvn ${params.BUILDMETHOD} sonar:sonar"  
                 }
                 
             }
