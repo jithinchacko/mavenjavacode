@@ -12,7 +12,10 @@ pipeline {
         }
         stage('build') {
             steps{
-                sh "mvn ${params.BUILDMETHOD}"
+                withSonarQubeEnv('SONAR-7.1') {
+                  sh "mvn ${params.BUILDMETHOD}"  
+                }
+                
             }
         }
         stage('postbuild') {
@@ -21,11 +24,6 @@ pipeline {
                 stash name: 'jarfile', includes: 'target/*.jar'
             }
         }
-        stage('copy to some other location'){
-            agent { label 'master'}
-            steps{
-                unstash name: 'jarfile'
-            }
-        }
+        
     }
 }
